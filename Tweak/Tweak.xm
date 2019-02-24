@@ -121,6 +121,7 @@ void NTFTestBanner() {
     if ([view respondsToSelector:@selector(setColorMatrixColor:)]) {
         _MTBackdropView *backdropView = (_MTBackdropView *)view;
 
+        backdropView.clipsToBounds = YES;
         self.layer.cornerRadius = backdropView.layer.cornerRadius;
         [backdropView setBackgroundColor: bgColor];
         [backdropView setColorMatrixColor: [color colorWithAlphaComponent:alpha]];
@@ -158,12 +159,16 @@ void NTFTestBanner() {
 -(void)ntfSetCornerRadius:(double)cornerRadius {
     UIView *view = MSHookIvar<UIView *>(self, "_backdropView");
 
+    self.clipsToBounds = YES;
     self.layer.cornerRadius = cornerRadius;
     if ([view respondsToSelector:@selector(setColorMatrixColor:)]) {
         _MTBackdropView *backdropView = (_MTBackdropView *)view;
+
+        backdropView.clipsToBounds = YES;
         backdropView.layer.cornerRadius = cornerRadius;
 
         CALayer *backdropLayer = (CALayer *)[backdropView _backdropLayer];
+
         backdropLayer.cornerRadius = cornerRadius;
     } else {
         _UIBackdropView *backdropView = (_UIBackdropView *)view;
@@ -254,6 +259,7 @@ void NTFTestBanner() {
         if ([subview isKindOfClass:%c(PLPlatterView)]) {
             count--;
             PLPlatterView *view = (PLPlatterView *)subview;
+            vew.clipsToBounds = YES;
             [view setCornerRadius:[config cornerRadius]];
             view.layer.cornerRadius = [config cornerRadius];
             view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + MODERNXI_Y_OFFSET, view.frame.size.width, view.frame.size.height - MODERNXI_Y_OFFSET);
@@ -262,6 +268,7 @@ void NTFTestBanner() {
 
             for (UIView *subsubview in view.subviews) {
                 if ([subsubview isKindOfClass:%c(MTMaterialView)]) {
+                    subsubview.clipsToBounds = YES;
                     subsubview.layer.cornerRadius = [config cornerRadius];
                     [((MTMaterialView *)subsubview) ntfSetCornerRadius:[config cornerRadius]];
 
@@ -322,6 +329,7 @@ void NTFTestBanner() {
 
     NCNotificationListCell *cell = (NCNotificationListCell *)self.superview.superview.superview;
     UIColor *dynamicColor = cell.contentViewController.view.contentView.ntfDynamicColor;
+    self.clippingView.clipsToBounds = YES;
     self.clippingView.layer.cornerRadius = [configNotifications cornerRadius];
     if (self.superview) {
         self.superview.layer.cornerRadius = [configNotifications cornerRadius];
@@ -453,6 +461,7 @@ void NTFTestBanner() {
 
     for (UIView *subview in self.subviews) {
         if ([subview isKindOfClass:%c(MTMaterialView)]) {
+            subview.clipsToBounds = YES;
             subview.layer.cornerRadius = [config cornerRadius];
         }
     }
@@ -579,6 +588,7 @@ void NTFTestBanner() {
 
     if (!self.backgroundMaterialView) return;
     self.backgroundMaterialView.hidden = NO;
+    self.backgroundMaterialView.clipsToBounds = YES;
     [self.backgroundMaterialView ntfSetCornerRadius:[config cornerRadius]];
     UIView *view = MSHookIvar<UIView *>(self.backgroundMaterialView, "_backdropView");
     view.alpha = [config backgroundBlurAlpha];
@@ -714,6 +724,7 @@ void NTFTestBanner() {
         }
     }
 
+    self.clipsToBounds = YES;
     self.layer.cornerRadius = [config cornerRadius];
     if ([config colorizeBackground]) {
         if ([config dynamicBackgroundColor]) {
@@ -790,6 +801,7 @@ void NTFTestBanner() {
 
     for (UIView *subview in self.subviews) {
         if ([subview isKindOfClass:%c(MTMaterialView)]) {
+            subview.clipsToBounds = YES;
             subview.layer.cornerRadius = [config cornerRadius];
             subview.hidden = YES;
         }
@@ -934,6 +946,7 @@ void NTFTestBanner() {
     }
 
     if (!self.backgroundMaterialView) return;
+    self.backgroundMaterialView.clipsToBounds = YES;
     [self.backgroundMaterialView ntfSetCornerRadius:[config cornerRadius]];
     UIView *view = MSHookIvar<UIView *>(self.backgroundMaterialView, "_backdropView");
     view.alpha = [config backgroundBlurAlpha];
@@ -1033,6 +1046,7 @@ void NTFTestBanner() {
     self.ntfDynamicColor = [NEPColorUtils averageColor:mcpvc.headerView.artworkView.image withAlpha:1.0];
     [self.backgroundMaterialView ntfColorize:self.ntfDynamicColor withBlurColor:[config blurColor] alpha:[config backgroundBlurColorAlpha]];
     
+    view.superview.clipsToBounds = YES;
     view.superview.layer.cornerRadius = [config cornerRadius];
 }
 
@@ -1045,10 +1059,12 @@ void NTFTestBanner() {
 
     self.ntfDynamicColor = nil;
 
+    self.backgroundMaterialView.clipsToBounds = YES;
     [self.backgroundMaterialView ntfSetCornerRadius:[config cornerRadius]];
     UIView *backdropView = MSHookIvar<UIView *>(self.backgroundMaterialView, "_backdropView");
     backdropView.alpha = [config backgroundBlurAlpha];
     SBDashBoardMediaControlsView *view = (SBDashBoardMediaControlsView *)[self.customContentView subviews][0];
+    view.superview.clipsToBounds = YES;
     view.superview.layer.cornerRadius = [config cornerRadius];
     if ([config colorizeBackground]) {
         if ([config dynamicBackgroundColor]) {
