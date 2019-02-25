@@ -109,6 +109,13 @@ void NTFTestBanner() {
 
 %group Notifica
 
+%hook _MTBackdropView
+- (void)layoutSubviews {
+    %orig;
+    self.clipsToBounds = YES;
+}
+%end
+
 %hook MTMaterialView
 
 %property (nonatomic, retain) CAGradientLayer *ntfGradientLayer;
@@ -259,7 +266,7 @@ void NTFTestBanner() {
         if ([subview isKindOfClass:%c(PLPlatterView)]) {
             count--;
             PLPlatterView *view = (PLPlatterView *)subview;
-            vew.clipsToBounds = YES;
+            view.clipsToBounds = YES;
             [view setCornerRadius:[config cornerRadius]];
             view.layer.cornerRadius = [config cornerRadius];
             view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + MODERNXI_Y_OFFSET, view.frame.size.width, view.frame.size.height - MODERNXI_Y_OFFSET);
