@@ -1,0 +1,8 @@
+{
+  "HIDE_NO_OLDER" = "\"오래된 알림 없음\" 숨기기";
+  "IDLE_TIMER" = "자동 잠금 타이머 (잠금 화면)";
+  "VERTICAL_OFFSET" = "수직 오프셋";
+  "VERTICAL_OFFSET_NOTIFICATIONS" = "수직 오프셋: 알림";
+  "VERTICAL_OFFSET_NOW_PLAYING" = "수직 오프셋: 지금 재생중";
+  "PULL_TO_CLEAR_ALL" = "당겨서 알림 삭제";
+}
